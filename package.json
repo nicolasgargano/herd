@@ -1,0 +1,34 @@
+{
+  "name": "colyseus-playground",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "author": "Nicolás Gargano",
+  "license": "BSD-3-Clause",
+  "workspaces": [
+    "shared",
+    "server",
+    "web"
+  ],
+  "devDependencies": {
+    "@types/react": "^17.0.27",
+    "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "@vitejs/plugin-react": "^1.0.2",
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "sass": "^1.42.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3",
+    "vite": "^2.6.5"
+  },
+  "dependencies": {
+    "colyseus": "^0.14.23",
+    "colyseus.js": "^0.14.13",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
