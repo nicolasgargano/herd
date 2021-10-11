@@ -1,36 +1,12 @@
-import http from "http"
 import { Room, Client } from "colyseus"
-import {Schema, MapSchema, type} from "@colyseus/schema"
-
-// An abstract player object, demonstrating a potential 2D world position
-export class Player extends Schema {
-  @type("string")
-  id: string
-
-  @type("number")
-  x: number
-
-  @type("number")
-  y: number
-
-
-  constructor(id: string, x: number, y: number) {
-    super()
-    this.id = id
-    this.x = x
-    this.y = y
-  }
-}
-
-export class State extends Schema {
-  @type({ map: Player })
-  players = new MapSchema<Player>();
-
-  @type("number")
-  currentTimestamp = 0
-}
+import {Player} from "../shared/player"
+import {State} from "../shared/state"
+import {World} from "@javelin/ecs"
+import {setupWorld} from "./world"
+import {Clock, createHrtimeLoop} from "@javelin/hrtime-loop"
 
 export class HerdRoom extends Room<State> {
+  private world : World<Clock> | undefined
 
   private playerMap: Map<string, Player> = new Map<string, Player>();
 
@@ -47,24 +23,18 @@ export class HerdRoom extends Room<State> {
       console.log(client.sessionId, "sent", type, message)
     })
 
-    this.setSimulationInterval((dt) => this.update(dt))
+    this.world = setupWorld(this.state)
+    createHrtimeLoop(this.world.step, (1000 / 60)).start()
   }
 
   // When client successfully join the room
   onJoin(client: Client, options: any) {
-    this.state.players.set(client.sessionId, new Player(client.sessionId, 0, 0))
+    this.state.players.set(client.sessionId, new Player(0, 0))
   }
-
-  // Authorize client based on provided options before WebSocket handshake is complete
-  onAuth (client: Client, options: any, request: http.IncomingMessage) { }
 
   // When a client leaves the room
   onLeave (client: Client, consented: boolean) { }
 
   // Cleanup callback, called after there are no more clients in the room. (see `autoDispose`)
   onDispose () { }
-
-  update (dt: number) {
-    this.state.currentTimestamp += dt
-  }
 }

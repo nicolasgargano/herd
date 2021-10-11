@@ -1,19 +1,19 @@
-import {RedisPresence, Server} from "colyseus"
+import {Server} from "colyseus"
 import { createServer } from "http"
 import express from "express"
 import cors from "cors"
-import {WebSocketTransport} from "colyseus.js/lib/transport/WebSocketTransport"
-const port = Number(process.env.port) || 3000
+import {HerdRoom} from "./HerdRoom"
+
+const port = Number(process.env.port) || 8000
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 
 const httpServer = createServer(app)
-const gameServer = new Server({
-  server: httpServer,
-  presence: new RedisPresence()
-})
+const gameServer = new Server({server: httpServer})
+
+gameServer.define("herd", HerdRoom)
 
 gameServer.listen(port)
   .then(_ => console.log(`Listening on port ${port}`))
