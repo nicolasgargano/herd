@@ -7,6 +7,7 @@ import {Box, Html, OrbitControls, Text} from "@react-three/drei"
 import {Canvas, useFrame} from "@react-three/fiber"
 import {Sheep} from "./components/Sheep"
 import {Dog} from "./components/Dog"
+import {DebugOverlay} from "./components/DebugOverlay"
 
 export const Scene: FC<{ gamestate: State }> = ({gamestate}) => {
   return (
@@ -58,12 +59,10 @@ export const App = () => {
 
   return (
     <>
-      <pre>
-        {JSON.stringify(stateRef.current, null, 2)}
-      </pre>
       <Canvas>
         {stateRef.current && <Scene gamestate={stateRef.current}/>}
       </Canvas>
+      {stateRef.current && <DebugOverlay gamestate={stateRef.current}/>}
     </>
   )
 }
