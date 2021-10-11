@@ -13,17 +13,20 @@ export const Scene: FC<{ gamestate: State }> = ({gamestate}) => {
     <>
       <Suspense fallback={null}>
         <Stage>
-          <Text color="white" anchorX="center" anchorY="middle">
-            {gamestate.currentTimestamp}
-          </Text>
           <Box position={[0, -1.5, 0]} args={[10, 2, 10]}>
             <meshStandardMaterial color={"green"}/>
           </Box>
-          <Dog/>
           {
-            [...gamestate.sheepMap.entries() || []].map(([id, sheep]) =>
-              <Sheep key={id} position={[sheep.x, 0, sheep.y]}/>
-            )
+            [...gamestate.sheepMap.entries()]
+              .map(([id, sheep]) =>
+                <Sheep key={id} position={[sheep.x, 0, sheep.y]}/>
+              )
+          }
+          {
+            [...gamestate.dogsMap.entries()]
+              .map(([id, dog]) =>
+                <Dog key={id} position={[dog.x, 0, dog.y]}/>
+              )
           }
         </Stage>
       </Suspense>

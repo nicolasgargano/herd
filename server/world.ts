@@ -3,6 +3,7 @@ import {State} from "../shared/state"
 import * as javelin from "@javelin/ecs"
 import {Sheep} from "../shared/sheep"
 import {Clock} from "@javelin/hrtime-loop"
+import { Dog } from "../shared/dog"
 
 const Vec2 = { x: javelin.number, y: javelin.number }
 const Tag_Sheep = {}
@@ -18,11 +19,17 @@ const sheepQuery = createQuery(Tag_Sheep, Vec2)
 const dogsQuery = createQuery(Tag_Dog, Vec2)
 
 export const setupWorld = (state: State) => {
-  const sys_test_sheepRunInCircles = (world: World<Clock>) => {
+  const sys_test_runInCircles = (world: World<Clock>) => {
     const seconds = Number(world.latestTickData.now) / 1_000_000_000
     sheepQuery((e, [sheepTag, vec2]) => {
       const newX = Math.cos(seconds) * 3
       const newY = Math.sin(seconds) * 3
+      vec2.x = newX
+      vec2.y = newY
+    })
+    dogsQuery((e, [dogTag, vec2]) => {
+      const newX = - Math.cos(seconds)
+      const newY = - Math.sin(seconds)
       vec2.x = newX
       vec2.y = newY
     })
@@ -44,11 +51,27 @@ export const setupWorld = (state: State) => {
         sheep.y = vec2.y
       }
     })
+
+    // TODO eslint is picking this up because of the "use" prefix
+    //   can I enable that rule only for the web directory?
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useMonitor(dogsQuery, (e, [, vec2]) => {
+      console.log("Adding dog to state!")
+      state.dogsMap.set(e.toString(), new Dog(vec2.x, vec2.y))
+    })
+
+    dogsQuery((e, [dogTag, vec2]) => {
+      const dog = state.dogsMap.get(e.toString())
+      if (dog) {
+        dog.x = vec2.x
+        dog.y = vec2.y
+      }
+    })
   }
 
   const world = createWorld<Clock>({
     systems: [
-      sys_test_sheepRunInCircles,
+      sys_test_runInCircles,
       sys_sync_state
     ],
   })
@@ -57,6 +80,12 @@ export const setupWorld = (state: State) => {
   world.create(
     component(Vec2, {x: 0, y: 0}),
     component(Tag_Sheep)
+  )
+
+  // Add one dog to test
+  world.create(
+    component(Vec2, {x: 0, y: 0}),
+    component(Tag_Dog)
   )
 
   return world

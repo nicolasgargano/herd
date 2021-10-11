@@ -1,9 +1,10 @@
 import { Box } from "@react-three/drei"
-import * as React from "react"
+import {FC} from "react"
+import {MeshProps} from "@react-three/fiber"
 
-export const Dog = () => {
+export const Dog : FC<MeshProps> = ({...props}) => {
   return (
-    <Box args={[1,1,1]}>
+    <Box {...props} args={[1,1,1]}>
       <meshStandardMaterial color={"black"}/>
     </Box>
   )
