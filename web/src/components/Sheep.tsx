@@ -5,7 +5,7 @@ import {FC} from "react"
 
 export const Sheep : FC<MeshProps> = ({...props}) => {
   return (
-    <Box  {...props} args={[1, 1, 1]}>
+    <Box  {...props} args={[1, 1, 1]} castShadow receiveShadow>
       <meshStandardMaterial color={"white"}/>
     </Box>
   )

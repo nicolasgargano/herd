@@ -2,9 +2,8 @@ import * as React from "react"
 import {FC, Suspense, useEffect, useRef, useState} from "react"
 import * as Colyseus from "colyseus.js"
 import {State} from "../../shared/state"
-import {Stage} from "@react-three/drei/core/Stage"
-import {Box, Html, OrbitControls, Text} from "@react-three/drei"
-import {Canvas, useFrame} from "@react-three/fiber"
+import {Box, OrbitControls, Stage} from "@react-three/drei"
+import {Canvas} from "@react-three/fiber"
 import {Sheep} from "./components/Sheep"
 import {Dog} from "./components/Dog"
 import {DebugOverlay} from "./components/DebugOverlay"
@@ -13,10 +12,7 @@ export const Scene: FC<{ gamestate: State }> = ({gamestate}) => {
   return (
     <>
       <Suspense fallback={null}>
-        <Stage>
-          <Box position={[0, -1.5, 0]} args={[10, 2, 10]}>
-            <meshStandardMaterial color={"green"}/>
-          </Box>
+        <Stage shadows environment={"forest"}>
           {
             [...gamestate.sheepMap.entries()]
               .map(([id, sheep]) =>
@@ -29,6 +25,9 @@ export const Scene: FC<{ gamestate: State }> = ({gamestate}) => {
                 <Dog key={id} position={[dog.x, 0, dog.y]}/>
               )
           }
+          <Box position={[0, -1.5, 0]} args={[10, 2, 10]} receiveShadow castShadow>
+            <meshStandardMaterial color={"green"}/>
+          </Box>
         </Stage>
       </Suspense>
       <OrbitControls/>
@@ -59,7 +58,7 @@ export const App = () => {
 
   return (
     <>
-      <Canvas>
+      <Canvas shadows>
         {stateRef.current && <Scene gamestate={stateRef.current}/>}
       </Canvas>
       {stateRef.current && <DebugOverlay gamestate={stateRef.current}/>}
