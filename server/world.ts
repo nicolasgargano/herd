@@ -1,47 +1,34 @@
-import {component, createQuery, createWorld, registerSchema, useMonitor, World} from "@javelin/ecs"
+import {
+  createWorld,
+  useMonitor,
+  World
+} from "@javelin/ecs"
 import {State} from "../shared/state"
-import * as javelin from "@javelin/ecs"
-import {Sheep} from "../shared/sheep"
+import * as schema from "../shared/schema"
 import {Clock} from "@javelin/hrtime-loop"
-import { Dog } from "../shared/dog"
+import {settings, dogsQuery, sheepQuery} from "./ecs/components"
+import {sys_movement} from "./ecs/sys_movement"
+import {sys_clamp_sheep_speed} from "./ecs/sys_clamp_sheep_speed"
+import {sys_reset_sheep_acceleration} from "./ecs/sys_reset_sheep_acceleration"
+import {sys_spawn_sheep} from "./ecs/sys_spawn_sheep"
+import {sys_test_wrap_sheep} from "./ecs/sys_test_wrap_sheep"
+import {sys_sheep_dog_evasion} from "./ecs/sys_sheep_dog_evasion"
+import {PlayerInput} from "../shared/input"
+import {sys_player_input} from "./ecs/sys_player_input"
+import {sys_movement_slow_down} from "./ecs/sys_movement_slow_down"
+import { sys_sheep_separation } from "./ecs/sys_sheep_separation"
+import {sys_sheep_neighboring} from "./ecs/sys_sheep_neighboring"
+import {sys_alignment} from "./ecs/sys_alignment"
+import {sys_sheep_grouping} from "./ecs/sys_sheep_grouping"
 
-const Vec2 = { x: javelin.number, y: javelin.number }
-const Tag_Sheep = {}
-const Tag_Dog = {}
-const PlayerControl = {playerId: javelin.string}
-
-registerSchema(Vec2, 1)
-registerSchema(Tag_Sheep, 2)
-registerSchema(Tag_Dog, 3)
-registerSchema(PlayerControl, 4)
-
-const sheepQuery = createQuery(Tag_Sheep, Vec2)
-const dogsQuery = createQuery(Tag_Dog, Vec2)
-
-export const setupWorld = (state: State) => {
-  const sys_test_runInCircles = (world: World<Clock>) => {
-    const seconds = Number(world.latestTickData.now) / 1_000_000_000
-    sheepQuery((e, [sheepTag, vec2]) => {
-      const newX = Math.cos(seconds) * 3
-      const newY = Math.sin(seconds) * 3
-      vec2.x = newX
-      vec2.y = newY
-    })
-    dogsQuery((e, [dogTag, vec2]) => {
-      const newX = - Math.cos(seconds)
-      const newY = - Math.sin(seconds)
-      vec2.x = newX
-      vec2.y = newY
-    })
-  }
-
+export const setupWorld = (state: State, inputMap: Map<string, PlayerInput>) => {
   const sys_sync_state = (world: World<Clock>) => {
     // TODO eslint is picking this up because of the "use" prefix
     //   can I enable that rule only for the web directory?
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useMonitor(sheepQuery, (e, [, vec2]) => {
       console.log("Adding sheep to state!")
-      state.sheepMap.set(e.toString(), new Sheep(vec2.x, vec2.y))
+      state.sheepMap.set(e.toString(), new schema.Sheep(vec2.x, vec2.y))
     })
 
     sheepQuery((e, [sheepTag, vec2]) => {
@@ -57,7 +44,7 @@ export const setupWorld = (state: State) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useMonitor(dogsQuery, (e, [, vec2]) => {
       console.log("Adding dog to state!")
-      state.dogsMap.set(e.toString(), new Dog(vec2.x, vec2.y))
+      state.dogsMap.set(e.toString(), new schema.Dog(vec2.x, vec2.y))
     })
 
     dogsQuery((e, [dogTag, vec2]) => {
@@ -71,22 +58,21 @@ export const setupWorld = (state: State) => {
 
   const world = createWorld<Clock>({
     systems: [
-      sys_test_runInCircles,
+      sys_reset_sheep_acceleration,
+      world => sys_sheep_neighboring(settings, world),
+      world => sys_alignment(settings, world),
+      world => sys_sheep_grouping(settings, world),
+      world => sys_player_input(settings, inputMap, world),
+      world => sys_clamp_sheep_speed(settings, world),
+      world => sys_sheep_dog_evasion(settings, world),
+      world => sys_sheep_separation(settings, world),
+      sys_movement,
+      sys_movement_slow_down,
+      sys_spawn_sheep,
+      sys_test_wrap_sheep,
       sys_sync_state
     ],
   })
-
-  // Add one sheep to test
-  world.create(
-    component(Vec2, {x: 0, y: 0}),
-    component(Tag_Sheep)
-  )
-
-  // Add one dog to test
-  world.create(
-    component(Vec2, {x: 0, y: 0}),
-    component(Tag_Dog)
-  )
 
   return world
 }
