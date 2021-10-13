@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "build": "vite build",
     "dev:server": "ts-node-dev ./server/main.ts --transpile-only",
     "dev:web": "vite"
   },
