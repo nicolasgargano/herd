@@ -4,7 +4,7 @@ import express from "express"
 import cors from "cors"
 import {HerdRoom} from "./HerdRoom"
 
-const port = Number(process.env.port) || 8000
+const port = Number(process.env.PORT) || 8000
 
 const app = express()
 app.use(cors())
