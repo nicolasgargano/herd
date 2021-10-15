@@ -38,7 +38,7 @@ export const Scene: FC<{ gamestate: State }> = ({gamestate}) => {
 }
 
 export const App = () => {
-  const [client] = useState(new Colyseus.Client("ws://localhost:8000"))
+  const [client] = useState(new Colyseus.Client(`${import.meta.env.VITE_SERVER_URL}`))
   const stateRef = useRef<State>()
   const [n, setN] = useState(0)
 
