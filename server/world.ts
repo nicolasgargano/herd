@@ -20,6 +20,7 @@ import { sys_sheep_separation } from "./ecs/sys_sheep_separation"
 import {sys_sheep_neighboring} from "./ecs/sys_sheep_neighboring"
 import {sys_alignment} from "./ecs/sys_alignment"
 import {sys_sheep_grouping} from "./ecs/sys_sheep_grouping"
+import {sys_movement_clamp} from "./ecs/sys_movement_clamp"
 
 export const setupWorld = (state: State, inputMap: Map<string, PlayerInput>) => {
   const sys_sync_state = (world: World<Clock>) => {
@@ -69,7 +70,7 @@ export const setupWorld = (state: State, inputMap: Map<string, PlayerInput>) => 
       sys_movement,
       sys_movement_slow_down,
       sys_spawn_sheep,
-      sys_test_wrap_sheep,
+      world => sys_movement_clamp(settings, world),
       sys_sync_state
     ],
   })
