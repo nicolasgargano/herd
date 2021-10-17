@@ -1,7 +1,7 @@
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { Vector2 } from "three"
-import { sheepMovementQuery } from "./components"
+import { sheepMovementQuery } from "../components"
 
 const zero = new Vector2(0, 0)
 

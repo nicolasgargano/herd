@@ -1,7 +1,7 @@
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { Vector2 } from "three"
-import { Settings, sheepMovementQuery } from "./components"
+import { Settings, sheepMovementQuery } from "../components"
 
 export const sys_clamp_sheep_speed = (
   settings: Settings,

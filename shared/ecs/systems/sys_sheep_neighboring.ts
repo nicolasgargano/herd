@@ -1,6 +1,6 @@
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
-import { Settings, sheepQuery } from "./components"
+import { Settings, sheepQuery } from "../components"
 
 export const sys_sheep_neighboring = (
   boidSettings: Settings,

@@ -8,7 +8,7 @@ import {
   Position,
   Sheep,
   Vec2
-} from "./components"
+} from "../components"
 import Prando from "prando"
 import { nonEmptyArray } from "fp-ts"
 

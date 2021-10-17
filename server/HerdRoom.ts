@@ -2,7 +2,6 @@ import { Room, Client } from "colyseus"
 import { Player } from "../shared/player"
 import { State } from "../shared/state"
 import { component, toComponent, World } from "@javelin/ecs"
-import { setupWorld } from "./world"
 import { Clock, createHrtimeLoop } from "@javelin/hrtime-loop"
 import { PlayerInput } from "../shared/input"
 import { ClientMsg } from "../shared/msgs"
@@ -15,8 +14,9 @@ import {
   Position,
   Sheep,
   Vec2
-} from "./ecs/components"
+} from "../shared/ecs/components"
 import { Vector2 } from "three"
+import { setupWorld } from "../shared/ecs/world"
 
 export class HerdRoom extends Room<State> {
   private world: World<Clock> | undefined

@@ -1,7 +1,7 @@
-import { Settings, playerControlledDogs } from "./components"
+import { Settings, playerControlledDogs } from "../components"
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
-import { PlayerInput } from "../../shared/input"
+import { PlayerInput } from "../../input"
 
 export const sys_player_input = (
   settings: Settings,

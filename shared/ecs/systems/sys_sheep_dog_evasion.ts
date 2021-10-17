@@ -3,7 +3,7 @@ import {
   dogsQuery,
   sheepQuery,
   sheepMovementQuery
-} from "./components"
+} from "../components"
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { Vector2 } from "three"

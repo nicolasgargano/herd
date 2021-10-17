@@ -1,6 +1,6 @@
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
-import { movementQuery, Settings } from "./components"
+import { movementQuery, Settings } from "../components"
 import { Vector2 } from "three"
 
 export const sys_movement_clamp = (settings: Settings, world: World<Clock>) => {

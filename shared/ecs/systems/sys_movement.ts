@@ -1,6 +1,6 @@
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
-import { movementQuery } from "./components"
+import { movementQuery } from "../components"
 
 export const sys_movement = (world: World<Clock>) => {
   const dt = world.latestTickData.dt / 1000

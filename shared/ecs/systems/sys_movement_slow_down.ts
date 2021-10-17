@@ -1,6 +1,6 @@
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
-import { movementQuery, sheepMovementQuery } from "./components"
+import { movementQuery, sheepMovementQuery } from "../components"
 import { Vector2 } from "three"
 
 const decrement = 0.3

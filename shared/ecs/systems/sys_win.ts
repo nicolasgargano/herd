@@ -1,7 +1,7 @@
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
-import { Settings, sheepQuery } from "./components"
-import { State } from "../../shared/state"
+import { Settings, sheepQuery } from "../components"
+import { State } from "../../state"
 
 export const sys_win = (
   settings: Settings,

@@ -1,8 +1,8 @@
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
-import { Settings, sheepQuery } from "./components"
+import { Settings, sheepQuery } from "../components"
 import { Vector2 } from "three"
-import { State } from "../../shared/state"
+import { State } from "../../state"
 
 export const sys_scoring = (
   settings: Settings,

@@ -1,7 +1,7 @@
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { Vector2 } from "three"
-import { Settings, Movement, sheepMovementQuery } from "./components"
+import { Settings, Movement, sheepMovementQuery } from "../components"
 
 export const sys_alignment = (boidSettings: Settings, world: World<Clock>) => {
   sheepMovementQuery((e, [sheep, pos, movement]) => {
