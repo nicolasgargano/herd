@@ -18,6 +18,7 @@ import { sys_alignment } from "./ecs/sys_alignment"
 import { sys_sheep_grouping } from "./ecs/sys_sheep_grouping"
 import { sys_movement_clamp } from "./ecs/sys_movement_clamp"
 import { sys_scoring } from "./ecs/sys_scoring"
+import { sys_win } from "./ecs/sys_win"
 
 export const setupWorld = (
   state: State,
@@ -69,6 +70,7 @@ export const setupWorld = (
       world => sys_sheep_separation(settings, world),
       sys_movement,
       world => sys_scoring(settings, state, world),
+      world => sys_win(settings, state, world),
       sys_movement_slow_down,
       sys_spawn_sheep,
       world => sys_movement_clamp(settings, world),
