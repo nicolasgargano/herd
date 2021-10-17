@@ -14,6 +14,7 @@
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.7.2",
     "com.unity.xr.legacyinputhelpers": "2.1.8",
+    "io.colyseus.sdk": "https://github.com/colyseus/colyseus-unity3d.git#upm",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
