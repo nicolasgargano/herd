@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "prepare": "husky install",
     "build": "vite build",
     "build:server": "tsc",
     "dev:server": "ts-node-dev ./server/main.ts --transpile-only",
@@ -28,6 +29,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.2",
     "sass": "^1.42.1",
     "ts-node": "^10.2.1",
     "ts-node-dev": "^1.1.8",
