@@ -53,7 +53,12 @@ export class HerdRoom extends Room<State> {
 
     // When client successfully join the room
     onJoin(client: Client, options: any) {
-      this.state.players.set(client.id, new Player(0, 0, false))
+      const topTeamPlayers = [...this.state.players.values()].filter(p => p.team === this.state.topTeam).length
+      const bottomTeamPlayers = [...this.state.players.values()].filter(p => p.team === this.state.bottomTeam).length
+      const teamToJoin = topTeamPlayers < bottomTeamPlayers ? this.state.topTeam : this.state.bottomTeam
+
+      this.state.players.set(client.id, new Player(0, 0, false, teamToJoin))
+
       this.inputMap.set(client.id, {up: false, left: false, down: false, right: false})
       this.world?.create(
         component(Dog),
