@@ -42,11 +42,6 @@ export class HerdRoom extends Room<State> {
             }
           })
         )
-
-        //
-        // Triggers when any other type of message is sent
-        //
-        console.log(client.id, "sent", type, message)
       })
 
       this.world = setupWorld(this.state, this.inputMap)
