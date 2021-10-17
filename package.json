@@ -8,7 +8,8 @@
     "build": "vite build",
     "build:server": "tsc",
     "dev:server": "ts-node-dev ./server/main.ts --transpile-only",
-    "dev:web": "vite"
+    "dev:web": "vite",
+    "gen:unity": "schema-codegen shared/** --output herd-unity/Assets/Scripts/Generated/Schema --csharp --namespace Herd.Schema"
   },
   "author": "Nicolás Gargano",
   "license": "BSD-3-Clause",
