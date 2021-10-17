@@ -14,7 +14,6 @@ import {Vector2} from "three"
 export class HerdRoom extends Room<State> {
     private world: World<Clock> | undefined
 
-    private playerMap: Map<string, Player> = new Map<string, Player>();
     private inputMap: Map<string, PlayerInput> = new Map<string, PlayerInput>();
 
     // When room is initialized
