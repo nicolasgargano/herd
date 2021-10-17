@@ -1,6 +1,12 @@
-node_modules
 .DS_Store
+.idea
+
+node_modules
+.eslintcache
+
+*.local
+
 dist
 dist-ssr
-*.local
 build
+
