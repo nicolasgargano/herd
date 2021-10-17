@@ -1,7 +1,7 @@
-import {World} from "@javelin/ecs"
-import {Clock} from "@javelin/hrtime-loop"
-import {Vector2} from "three"
-import {sheepMovementQuery} from "./components"
+import { World } from "@javelin/ecs"
+import { Clock } from "@javelin/hrtime-loop"
+import { Vector2 } from "three"
+import { sheepMovementQuery } from "./components"
 
 export const sys_test_wrap_sheep = (world: World<Clock>) => {
   const size = 16

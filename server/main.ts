@@ -1,8 +1,8 @@
-import {Server} from "colyseus"
+import { Server } from "colyseus"
 import { createServer } from "http"
 import express from "express"
 import cors from "cors"
-import {HerdRoom} from "./HerdRoom"
+import { HerdRoom } from "./HerdRoom"
 
 const port = Number(process.env.PORT) || 8000
 
@@ -11,10 +11,11 @@ app.use(cors())
 app.use(express.json())
 
 const httpServer = createServer(app)
-const gameServer = new Server({server: httpServer})
+const gameServer = new Server({ server: httpServer })
 
 gameServer.define("herd", HerdRoom)
 
-gameServer.listen(port)
+gameServer
+  .listen(port)
   .then(_ => console.log(`Listening on port ${port}`))
   .catch(err => console.error(err))

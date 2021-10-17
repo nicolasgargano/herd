@@ -1,15 +1,15 @@
-import {Schema, type} from "@colyseus/schema"
+import { Schema, type } from "@colyseus/schema"
 
 export class Dog extends Schema {
-    @type("number")
-    x: number
+  @type("number")
+  x: number
 
-    @type("number")
-    y: number
+  @type("number")
+  y: number
 
-    constructor(x: number, y: number) {
-      super()
-      this.x = x
-      this.y = y
-    }
+  constructor(x: number, y: number) {
+    super()
+    this.x = x
+    this.y = y
+  }
 }

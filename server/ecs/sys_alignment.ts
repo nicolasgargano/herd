@@ -1,7 +1,7 @@
-import {World} from "@javelin/ecs"
-import {Clock} from "@javelin/hrtime-loop"
-import {Vector2} from "three"
-import {Settings, Movement, sheepMovementQuery} from "./components"
+import { World } from "@javelin/ecs"
+import { Clock } from "@javelin/hrtime-loop"
+import { Vector2 } from "three"
+import { Settings, Movement, sheepMovementQuery } from "./components"
 
 export const sys_alignment = (boidSettings: Settings, world: World<Clock>) => {
   sheepMovementQuery((e, [sheep, pos, movement]) => {
@@ -14,14 +14,18 @@ export const sys_alignment = (boidSettings: Settings, world: World<Clock>) => {
           accumulatedHerdVelocity.add(neighborMovement.velocity as Vector2)
       }
 
-      const averageHerdVelocity = accumulatedHerdVelocity.divideScalar(sheep.neighbors.length)
+      const averageHerdVelocity = accumulatedHerdVelocity.divideScalar(
+        sheep.neighbors.length
+      )
 
       const steerForce = averageHerdVelocity
         .sub(movement.velocity as Vector2)
         .clampLength(0, boidSettings.maxSteerForce)
 
-      const weightedSteerForce = steerForce.multiplyScalar(boidSettings.alignmentWeight);
-      (movement.acceleration as Vector2).add(weightedSteerForce)
+      const weightedSteerForce = steerForce.multiplyScalar(
+        boidSettings.alignmentWeight
+      )
+      ;(movement.acceleration as Vector2).add(weightedSteerForce)
     }
   })
 }

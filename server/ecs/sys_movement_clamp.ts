@@ -1,10 +1,10 @@
-import {World} from "@javelin/ecs"
-import {Clock} from "@javelin/hrtime-loop"
-import {movementQuery, Settings} from "./components"
-import {Vector2} from "three"
+import { World } from "@javelin/ecs"
+import { Clock } from "@javelin/hrtime-loop"
+import { movementQuery, Settings } from "./components"
+import { Vector2 } from "three"
 
 export const sys_movement_clamp = (settings: Settings, world: World<Clock>) => {
-  movementQuery((e, [position,]) => {
+  movementQuery((e, [position]) => {
     const pos = position as Vector2
     const [halfExtentX, halfExtentY] = settings.worldHalfExtents
 

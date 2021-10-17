@@ -3,7 +3,8 @@ import { useEffect, useRef } from "react"
 export const useKeyDown = (key: string) => {
   const pressed = useRef(false)
 
-  const isThisKey = (event: KeyboardEvent) => key.toLowerCase() == event.key.toLowerCase()
+  const isThisKey = (event: KeyboardEvent) =>
+    key.toLowerCase() == event.key.toLowerCase()
 
   const onDown = (event: KeyboardEvent) => {
     if (isThisKey(event)) pressed.current = true

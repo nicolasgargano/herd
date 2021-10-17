@@ -1,5 +1,5 @@
 import * as javelin from "@javelin/ecs"
-import {createQuery, registerSchema} from "@javelin/ecs"
+import { createQuery, registerSchema } from "@javelin/ecs"
 
 export const Vec2 = {
   x: javelin.number,
@@ -29,11 +29,17 @@ export const sheepQuery = createQuery(Sheep, Position)
 export const dogsQuery = createQuery(Dog, Position)
 export const movementQuery = createQuery(Position, Movement)
 export const sheepMovementQuery = createQuery(Sheep, Position, Movement)
-export const playerControlledDogs = createQuery(Dog, Position, Movement, PlayerControl)
+export const playerControlledDogs = createQuery(
+  Dog,
+  Position,
+  Movement,
+  PlayerControl
+)
 
 export type Settings = {
   worldHalfExtents: [number, number]
   scoringAreaHeight: number
+  pointsToWin: number
   amountOfSheep: number
   alertRadius: number
   neighboringRadius: number
@@ -43,13 +49,14 @@ export type Settings = {
   alignmentWeight: number
   groupingWeight: number
   separationWeight: number
-  dogEvasionWeight: number,
+  dogEvasionWeight: number
   dogSpeed: number
 }
 
 export const settings: Settings = {
   worldHalfExtents: [16, 16],
   scoringAreaHeight: 3,
+  pointsToWin: 1000,
   amountOfSheep: 30,
   alertRadius: 5,
   neighboringRadius: 5,

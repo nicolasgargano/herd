@@ -1,30 +1,28 @@
-import {State} from "../../../shared/state"
-import {FC} from "react"
+import { State } from "../../../shared/state"
+import { FC } from "react"
 import * as React from "react"
 
 export type OverlayProps = {
-    state: State,
-    onReady: () => void,
-    onStart: () => void
+  state: State
+  onReady: () => void
+  onStart: () => void
 }
 
-export const Overlay : FC<OverlayProps> = (props) => {
+export const Overlay: FC<OverlayProps> = props => {
   switch (props.state.gamestate) {
-  case "waiting":
-    return (
-      <Waiting {...props}/>
-    )
-  case "playing":
-    // TODO I think I'll make it diegetic
-    return null
-  case "done":
-    // TODO
-    return null
+    case "waiting":
+      return <Waiting {...props} />
+    case "playing":
+      // TODO I think I'll make it diegetic
+      return null
+    case "done":
+      // TODO
+      return null
   }
   return null
 }
 
-const Waiting: FC<OverlayProps> = ({state, onStart, onReady}) => {
+const Waiting: FC<OverlayProps> = ({ state, onStart, onReady }) => {
   const players = [...state.players.entries()]
   return (
     <div className={"w-screen h-screen absolute inset-0 select-none"}>
@@ -43,7 +41,9 @@ const Waiting: FC<OverlayProps> = ({state, onStart, onReady}) => {
               <tr key={id}>
                 <td>{player.ready ? "Ready" : "Not ready"}</td>
                 <td>{id}</td>
-                <td><button onClick={onReady}>Ready</button></td>
+                <td>
+                  <button onClick={onReady}>Ready</button>
+                </td>
               </tr>
             ))}
           </tbody>
