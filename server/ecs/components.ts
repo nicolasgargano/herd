@@ -33,6 +33,7 @@ export const playerControlledDogs = createQuery(Dog, Position, Movement, PlayerC
 
 export type Settings = {
   worldHalfExtents: [number, number]
+  scoringAreaHeight: number
   amountOfSheep: number
   alertRadius: number
   neighboringRadius: number
@@ -48,6 +49,7 @@ export type Settings = {
 
 export const settings: Settings = {
   worldHalfExtents: [16, 16],
+  scoringAreaHeight: 3,
   amountOfSheep: 30,
   alertRadius: 5,
   neighboringRadius: 5,

@@ -21,6 +21,7 @@ import {sys_sheep_neighboring} from "./ecs/sys_sheep_neighboring"
 import {sys_alignment} from "./ecs/sys_alignment"
 import {sys_sheep_grouping} from "./ecs/sys_sheep_grouping"
 import {sys_movement_clamp} from "./ecs/sys_movement_clamp"
+import {sys_scoring} from "./ecs/sys_scoring"
 
 export const setupWorld = (state: State, inputMap: Map<string, PlayerInput>) => {
   const sys_sync_state = (world: World<Clock>) => {
@@ -68,6 +69,7 @@ export const setupWorld = (state: State, inputMap: Map<string, PlayerInput>) => 
       world => sys_sheep_dog_evasion(settings, world),
       world => sys_sheep_separation(settings, world),
       sys_movement,
+      world => sys_scoring(settings, state, world),
       sys_movement_slow_down,
       sys_spawn_sheep,
       world => sys_movement_clamp(settings, world),
