@@ -31,7 +31,14 @@ export class HerdRoom extends Room<State> {
           match({
             input: ({playerInput}) => {
               this.inputMap.set(client.id, playerInput)
-              console.log(this.inputMap)
+            },
+            setReady: ({ready}) => {
+              const currentPlayer = this.state.players.get(client.id)
+              if (currentPlayer) currentPlayer.ready = ready
+            },
+            start: () => {
+              const allReady = [...this.state.players.values()].every(p => p.ready)
+              if (allReady) this.state.gamestate = "playing"
             }
           })
         )
@@ -45,13 +52,14 @@ export class HerdRoom extends Room<State> {
       this.world = setupWorld(this.state, this.inputMap)
 
       createHrtimeLoop(clock => {
-        this.world?.step(clock)
+        if (this.state.gamestate === "playing")
+          this.world?.step(clock)
       }, (1000 / 60)).start()
     }
 
     // When client successfully join the room
     onJoin(client: Client, options: any) {
-      this.state.players.set(client.id, new Player(0, 0))
+      this.state.players.set(client.id, new Player(0, 0, false))
       this.inputMap.set(client.id, {up: false, left: false, down: false, right: false})
       this.world?.create(
         component(Dog),

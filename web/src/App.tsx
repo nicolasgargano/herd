@@ -7,8 +7,9 @@ import {Canvas} from "@react-three/fiber"
 import {Sheep} from "./components/Sheep"
 import {Dog} from "./components/Dog"
 import {DebugOverlay} from "./components/DebugOverlay"
-import {useInterval} from "./hooks/useInterval"
 import {useKeyDown} from "./hooks/useKeyDown"
+import {Overlay} from "./components/Overlay"
+import {Room} from "colyseus.js"
 
 export const Scene: FC<{ gamestate: State }> = ({gamestate}) => {
   return (
@@ -39,7 +40,7 @@ export const Scene: FC<{ gamestate: State }> = ({gamestate}) => {
 
 export const App = () => {
   const [client] = useState(new Colyseus.Client(`${import.meta.env.VITE_SERVER_URL}`))
-  const stateRef = useRef<State>()
+  const roomRef = useRef<Room<State>>()
   const [n, setN] = useState(0)
 
   const up = useKeyDown("w")
@@ -55,12 +56,12 @@ export const App = () => {
   useEffect(() => {
     setInterval(() => {
       setN(n => n + 1)
-    }, 1000/60)
+    }, 1000 / 60)
   }, [])
 
   const join = async () => {
     const room = await client.joinOrCreate<State>("herd")
-    stateRef.current = room.state
+    roomRef.current = room
     setInterval(() => {
       room.send("clientMsg", {
         _type: "input",
@@ -71,7 +72,7 @@ export const App = () => {
           right: right.current
         }
       })
-    }, 1000/20)
+    }, 1000 / 20)
   }
 
   return (
@@ -82,9 +83,15 @@ export const App = () => {
           state.camera.position.set(0, 40, 10)
         }}
       >
-        {stateRef.current && <Scene gamestate={stateRef.current}/>}
+        {roomRef.current && <Scene gamestate={roomRef.current.state}/>}
       </Canvas>
-      {stateRef.current && <DebugOverlay arbitrary={{up, left, down, right}} gamestate={stateRef.current}/>}
+      {roomRef.current && <DebugOverlay arbitrary={{up, left, down, right}} gamestate={roomRef.current.state}/>}
+      {roomRef.current &&
+            <Overlay state={roomRef.current.state}
+              onReady={() => roomRef.current?.send("clientMsg", {_type: "setReady", ready: true})}
+              onStart={() => roomRef.current?.send("clientMsg", {_type: "start"})}>
+            </Overlay>
+      }
     </>
   )
 }

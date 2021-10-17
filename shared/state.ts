@@ -3,7 +3,12 @@ import {Player} from "./player"
 import {Sheep} from "./sheep"
 import {Dog} from "./dog"
 
+export type GameStage = "waiting" | "playing" | "done"
+
 export class State extends Schema {
+    @type("string")
+    gamestate : GameStage = "waiting"
+
     @type({ map: Player })
     players = new MapSchema<Player>()
 

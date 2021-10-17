@@ -7,9 +7,13 @@ export class Player extends Schema {
     @type("number")
     y: number
 
-    constructor(x: number, y: number) {
+    @type("boolean")
+    ready: boolean
+
+    constructor(x: number, y: number, ready: boolean) {
       super()
       this.x = x
       this.y = y
+      this.ready = ready
     }
 }
