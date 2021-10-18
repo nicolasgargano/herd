@@ -1,9 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Colyseus;
 using UnityEngine;
-using Colyseus;
 using Herd;
 using JetBrains.Annotations;
 
@@ -16,7 +13,7 @@ public class HerdManager : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        ColyseusClient client = new ColyseusClient("ws://localhost:8000");
+        ColyseusClient client = new ColyseusClient(Constants.GAME_CI_SERVER_ENDPOINT);
         room = await client.JoinOrCreate<State>("herd");
         if (room != null)
         {
