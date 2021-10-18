@@ -72,7 +72,7 @@ export class HerdRoom extends Room<State> {
         ? this.state.topTeam
         : this.state.bottomTeam
 
-    this.state.players.set(client.id, new Player(0, 0, false, teamToJoin))
+    this.state.players.set(client.id, new Player(false, teamToJoin))
 
     this.inputMap.set(client.id, {
       up: false,
