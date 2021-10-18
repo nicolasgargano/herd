@@ -6,6 +6,11 @@ using JetBrains.Annotations;
 
 public class HerdManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject dogPrefab;
+    [SerializeField]
+    private GameObject sheepPrefab;
+
     [CanBeNull]
     private ColyseusRoom<State> room = null;
     private Dictionary<string, GameObject> gameObjects = new Dictionary<string, GameObject>();
@@ -13,8 +18,12 @@ public class HerdManager : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+        Debug.Log("Creating client");
         ColyseusClient client = new ColyseusClient(Constants.GAME_CI_SERVER_ENDPOINT);
+        Debug.Log("Connecting to room");
+        // TODO: this seems to be failing on the webgl build, I couldn't find what is going on. Asked on discord.
         room = await client.JoinOrCreate<State>("herd");
+        Debug.Log("Connected to room");
         if (room != null)
         {
             await room.Send("clientMsg", new
@@ -37,10 +46,9 @@ public class HerdManager : MonoBehaviour
                 var id = $"player-{s}";
                 if (!gameObjects.ContainsKey(id))
                 {
-                    gameObjects[id] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    gameObjects[id] = Instantiate(dogPrefab);
                 }
                 var dogGo = gameObjects[id];
-                dogGo.GetComponent<Renderer>().material.color = Color.black;
                 dogGo.transform.position = new Vector3(dog.x, 0, dog.y);
             });
             
@@ -49,10 +57,9 @@ public class HerdManager : MonoBehaviour
                 var id = $"sheep-{s}";
                 if (!gameObjects.ContainsKey(id))
                 {
-                    gameObjects.Add(id, GameObject.CreatePrimitive(PrimitiveType.Cube));
+                    gameObjects[id] = Instantiate(sheepPrefab);
                 }
                 var sheepGo = gameObjects[id];
-                sheepGo.GetComponent<Renderer>().material.color = Color.white;
                 sheepGo.transform.position = new Vector3(sheep.x, 0, sheep.y);
             });
 

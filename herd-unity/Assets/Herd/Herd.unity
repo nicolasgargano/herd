@@ -365,6 +365,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d6c4aaa76c5b74da9120ad99069b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dogPrefab: {fileID: 8935164675381133430, guid: 790c769ddb536f04a9f2af5975882268, type: 3}
+  sheepPrefab: {fileID: 1501830124752124851, guid: 379224f946f545240846bda0459f57c4, type: 3}
 --- !u!4 &1717758115
 Transform:
   m_ObjectHideFlags: 0
