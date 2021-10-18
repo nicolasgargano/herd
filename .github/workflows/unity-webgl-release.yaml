@@ -64,6 +64,7 @@ jobs:
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
+          buildMethod: UnityBuilderAction.BuildScript.Build
 
       # Output
       - uses: actions/upload-artifact@v2
