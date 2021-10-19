@@ -55,7 +55,7 @@ export type Settings = {
 
 export const settings: Settings = {
   worldHalfExtents: [21, 13],
-  scoringAreaWidth: 3,
+  scoringAreaWidth: 5,
   pointsToWin: 1000,
   amountOfSheep: 30,
   alertRadius: 5,
