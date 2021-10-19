@@ -24,7 +24,11 @@ export const Scene: FC<{ gamestate: State }> = ({ gamestate }) => {
           ))}
           <Box
             position={[0, -1.5, 0]}
-            args={[34, 2, 55]}
+            args={[
+              settings.worldHalfExtents[0] * 2 + 1,
+              2,
+              settings.worldHalfExtents[1] * 2 + 1
+            ]}
             receiveShadow
             castShadow
           >
