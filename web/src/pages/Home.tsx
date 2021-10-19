@@ -152,6 +152,7 @@ export const Home = () => {
       )}
       {roomRef.current && (
         <Overlay
+          currentPlayerId={roomRef.current.sessionId}
           state={roomRef.current.state}
           onReady={() =>
             roomRef.current?.send("clientMsg", {
@@ -160,7 +161,7 @@ export const Home = () => {
             })
           }
           onStart={() => roomRef.current?.send("clientMsg", { _type: "start" })}
-        ></Overlay>
+        />
       )}
     </>
   )
