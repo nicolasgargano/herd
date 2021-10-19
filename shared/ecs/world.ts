@@ -17,6 +17,7 @@ import { sys_alignment } from "./systems/sys_alignment"
 import { sys_sheep_grouping } from "./systems/sys_sheep_grouping"
 import { sys_movement_clamp } from "./systems/sys_movement_clamp"
 import { sys_scoring } from "./systems/sys_scoring"
+import { sys_sync_state } from "./systems/sys_sync_state"
 import { sys_win } from "./systems/sys_win"
 
 export type TickData = {
@@ -29,39 +30,29 @@ export const setupWorld = (
   state: State,
   inputMap: Map<string, PlayerInput>
 ) => {
-  const sys_sync_state = (world: World<Clock>) => {
-    // TODO eslint is picking this up because of the "use" prefix
-    //   can I enable that rule only for the web directory?
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useMonitor(sheepQuery, (e, [, vec2]) => {
-      console.log("Adding sheep to state!")
-      state.sheepMap.set(e.toString(), new schema.Sheep(vec2.x, vec2.y))
-    })
+  sheepQuery((e, [sheepTag, vec2]) => {
+    const sheep = state.sheepMap.get(e.toString())
+    if (sheep) {
+      sheep.x = vec2.x
+      sheep.y = vec2.y
+    }
+  })
 
-    sheepQuery((e, [sheepTag, vec2]) => {
-      const sheep = state.sheepMap.get(e.toString())
-      if (sheep) {
-        sheep.x = vec2.x
-        sheep.y = vec2.y
-      }
-    })
+  // TODO eslint is picking this up because of the "use" prefix
+  //   can I enable that rule only for the web directory?
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useMonitor(dogsQuery, (e, [, vec2]) => {
+    console.log("Adding dog to state!")
+    state.dogsMap.set(e.toString(), new schema.Dog(vec2.x, vec2.y))
+  })
 
-    // TODO eslint is picking this up because of the "use" prefix
-    //   can I enable that rule only for the web directory?
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useMonitor(dogsQuery, (e, [, vec2]) => {
-      console.log("Adding dog to state!")
-      state.dogsMap.set(e.toString(), new schema.Dog(vec2.x, vec2.y))
-    })
-
-    dogsQuery((e, [dogTag, vec2]) => {
-      const dog = state.dogsMap.get(e.toString())
-      if (dog) {
-        dog.x = vec2.x
-        dog.y = vec2.y
-      }
-    })
-  }
+  dogsQuery((e, [dogTag, vec2]) => {
+    const dog = state.dogsMap.get(e.toString())
+    if (dog) {
+      dog.x = vec2.x
+      dog.y = vec2.y
+    }
+  })
 
   const world = createWorld<TickData>({
     systems: [
@@ -79,7 +70,7 @@ export const setupWorld = (
       sys_movement_slow_down,
       sys_spawn_sheep,
       world => sys_movement_clamp(settings, world),
-      sys_sync_state
+      world => sys_sync_state(world, state)
     ]
   })
 
