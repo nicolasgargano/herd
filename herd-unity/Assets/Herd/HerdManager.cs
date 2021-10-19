@@ -22,6 +22,7 @@ public class HerdManager : MonoBehaviour
         ColyseusClient client = new ColyseusClient(Constants.GAME_CI_SERVER_ENDPOINT);
         Debug.Log("Connecting to room");
         // TODO: this seems to be failing on the webgl build, I couldn't find what is going on. Asked on discord.
+        // TODO: best lead I could find https://forum.unity.com/threads/webgl-with-signalr-argumentnullexception-value-cannot-be-null.671926/
         room = await client.JoinOrCreate<State>("herd");
         Debug.Log("Connected to room");
         if (room != null)
@@ -65,7 +66,7 @@ public class HerdManager : MonoBehaviour
 
             room.Send("clientMsg", new
             {
-                _type = "input", 
+                _type = "input",
                 playerInput = new
                 {
                     up = Input.GetKey(KeyCode.W),
