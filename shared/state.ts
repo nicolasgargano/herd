@@ -20,8 +20,8 @@ export class State extends Schema {
   dogsMap = new MapSchema<Dog>()
 
   @type(Team)
-  topTeam = new Team("top", 0)
+  redTeam = new Team("red", 0)
 
   @type(Team)
-  bottomTeam = new Team("bottom", 0)
+  blueTeam = new Team("blue", 0)
 }

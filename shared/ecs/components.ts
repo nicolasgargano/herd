@@ -38,7 +38,7 @@ export const playerControlledDogs = createQuery(
 
 export type Settings = {
   worldHalfExtents: [number, number]
-  scoringAreaHeight: number
+  scoringAreaWidth: number
   pointsToWin: number
   amountOfSheep: number
   alertRadius: number
@@ -54,8 +54,8 @@ export type Settings = {
 }
 
 export const settings: Settings = {
-  worldHalfExtents: [16, 16],
-  scoringAreaHeight: 3,
+  worldHalfExtents: [21, 13],
+  scoringAreaWidth: 3,
   pointsToWin: 1000,
   amountOfSheep: 30,
   alertRadius: 5,

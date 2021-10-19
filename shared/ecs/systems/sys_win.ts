@@ -10,8 +10,8 @@ export const sys_win = (
   world: World<TickData>
 ) => {
   if (
-    state.topTeam.points >= settings.pointsToWin ||
-    state.bottomTeam.points >= settings.pointsToWin
+    state.redTeam.points >= settings.pointsToWin ||
+    state.blueTeam.points >= settings.pointsToWin
   )
     state.gamestate = "done"
 }

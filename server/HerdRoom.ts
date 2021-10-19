@@ -71,16 +71,16 @@ export class HerdRoom extends Room<State> {
 
   // When client successfully join the room
   async onJoin(client: Client, options: any) {
-    const topTeamPlayers = [...this.state.players.values()].filter(
-      p => p.team === this.state.topTeam
+    const redTeamPlayers = [...this.state.players.values()].filter(
+      p => p.team === this.state.redTeam
     ).length
-    const bottomTeamPlayers = [...this.state.players.values()].filter(
-      p => p.team === this.state.bottomTeam
+    const blueTeamPlayers = [...this.state.players.values()].filter(
+      p => p.team === this.state.blueTeam
     ).length
     const teamToJoin =
-      topTeamPlayers < bottomTeamPlayers
-        ? this.state.topTeam
-        : this.state.bottomTeam
+      redTeamPlayers < blueTeamPlayers
+        ? this.state.redTeam
+        : this.state.blueTeam
 
     this.state.players.set(client.id, new Player(false, teamToJoin))
 

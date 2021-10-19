@@ -1,5 +1,4 @@
 import { World } from "@javelin/ecs"
-import { Clock } from "@javelin/hrtime-loop"
 import { Settings, sheepQuery } from "../components"
 import { Vector2 } from "three"
 import { State } from "../../state"
@@ -15,15 +14,15 @@ export const sys_scoring = (
       const pos = position as Vector2
       const dt = world.latestTickData.dt
       const limitHalfExtent =
-        settings.worldHalfExtents[1] - settings.scoringAreaHeight
+        settings.worldHalfExtents[0] - settings.scoringAreaWidth
 
-      if (pos.y > limitHalfExtent) state.topTeam.points += dt
-      else if (pos.y < -limitHalfExtent) state.bottomTeam.points += dt
+      if (pos.x > limitHalfExtent) state.redTeam.points += dt
+      else if (pos.x < -limitHalfExtent) state.blueTeam.points += dt
 
-      if (state.topTeam.points > settings.pointsToWin)
-        state.topTeam.points = settings.pointsToWin
-      if (state.bottomTeam.points > settings.pointsToWin)
-        state.bottomTeam.points = settings.pointsToWin
+      if (state.redTeam.points > settings.pointsToWin)
+        state.redTeam.points = settings.pointsToWin
+      if (state.blueTeam.points > settings.pointsToWin)
+        state.blueTeam.points = settings.pointsToWin
     }
   })
 }
