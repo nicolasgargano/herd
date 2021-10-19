@@ -36,7 +36,7 @@ export const Scene: FC<{ gamestate: State }> = ({ gamestate }) => {
           </Box>
         </Stage>
       </Suspense>
-      <OrbitControls />
+      <OrbitControls autoRotate={gamestate.gamestate === "done"} />
     </>
   )
 }
