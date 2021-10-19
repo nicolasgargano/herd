@@ -2,7 +2,7 @@ import * as React from "react"
 import { FC, Suspense, useEffect, useRef, useState } from "react"
 import * as Colyseus from "colyseus.js"
 import { State } from "../../../shared/state"
-import { Box, OrbitControls, Stage } from "@react-three/drei"
+import { Box, OrbitControls, Stage, Text } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { Sheep } from "../components/Sheep"
 import { Dog } from "../components/Dog"
@@ -10,6 +10,8 @@ import { DebugOverlay } from "../components/DebugOverlay"
 import { useKeyDown } from "../hooks/useKeyDown"
 import { Overlay } from "../components/Overlay"
 import { Room } from "colyseus.js"
+import { settings } from "../../../shared/ecs/components"
+import SyneMonoUrl from "../../assets/SyneMono-Regular.ttf?url"
 
 export const Scene: FC<{ gamestate: State }> = ({ gamestate }) => {
   return (
@@ -33,6 +35,58 @@ export const Scene: FC<{ gamestate: State }> = ({ gamestate }) => {
             castShadow
           >
             <meshStandardMaterial color={"green"} />
+          </Box>
+
+          <Text
+            anchorX={"center"}
+            anchorY={"bottom"}
+            color={"blue"}
+            textAlign={"center"}
+            fontSize={settings.worldHalfExtents[1]}
+            font={SyneMonoUrl}
+            rotation={[0, Math.PI / 2, 0]}
+            position={[-settings.worldHalfExtents[0] - 0.5, 0, 0]}
+          >
+            {Math.floor(gamestate.blueTeam.points).toString().padStart(4, "0")}
+          </Text>
+
+          <Text
+            anchorX={"center"}
+            anchorY={"bottom"}
+            color={"red"}
+            textAlign={"center"}
+            fontSize={settings.worldHalfExtents[1]}
+            font={SyneMonoUrl}
+            rotation={[0, -Math.PI / 2, 0]}
+            position={[settings.worldHalfExtents[0] + 0.5, 0, 0]}
+          >
+            {Math.floor(gamestate.redTeam.points).toString().padStart(4, "0")}
+          </Text>
+
+          <Box
+            position={[
+              -settings.worldHalfExtents[0] + settings.scoringAreaWidth,
+              -1.5,
+              0
+            ]}
+            args={[0.5, 2.005, settings.worldHalfExtents[1] * 2 + 1.005]}
+            receiveShadow
+            castShadow
+          >
+            <meshStandardMaterial color={"blue"} />
+          </Box>
+
+          <Box
+            position={[
+              settings.worldHalfExtents[0] - settings.scoringAreaWidth,
+              -1.5,
+              0
+            ]}
+            args={[0.5, 2.005, settings.worldHalfExtents[1] * 2 + 1.005]}
+            receiveShadow
+            castShadow
+          >
+            <meshStandardMaterial color={"red"} />
           </Box>
         </Stage>
       </Suspense>
@@ -85,7 +139,7 @@ export const Home = () => {
       <Canvas
         shadows
         onCreated={state => {
-          state.camera.position.set(0, 40, 10)
+          state.camera.position.set(0, 30, 20)
         }}
       >
         {roomRef.current && <Scene gamestate={roomRef.current.state} />}
