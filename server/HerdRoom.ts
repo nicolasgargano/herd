@@ -70,7 +70,7 @@ export class HerdRoom extends Room<State> {
   }
 
   // When client successfully join the room
-  onJoin(client: Client, options: any) {
+  async onJoin(client: Client, options: any) {
     const topTeamPlayers = [...this.state.players.values()].filter(
       p => p.team === this.state.topTeam
     ).length
@@ -99,10 +99,14 @@ export class HerdRoom extends Room<State> {
         acceleration: toComponent(new Vector2(0, 0), Vec2)
       })
     )
+
+    if (this.state.players.size >= 4) await this.lock()
   }
 
   // When a client leaves the room
-  onLeave(client: Client, consented: boolean) {}
+  async onLeave(client: Client, consented: boolean) {
+    if (this.locked) await this.unlock()
+  }
 
   // Cleanup callback, called after there are no more clients in the room. (see `autoDispose`)
   onDispose() {}
