@@ -11,8 +11,9 @@ import {
 } from "../components"
 import Prando from "prando"
 import { nonEmptyArray } from "fp-ts"
+import { TickData } from "../world"
 
-export const sys_spawn_sheep = (world: World<Clock>) => {
+export const sys_spawn_sheep = (world: World<TickData>) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const needsInit = useInit()
   if (needsInit) {

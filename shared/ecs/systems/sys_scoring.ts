@@ -3,16 +3,17 @@ import { Clock } from "@javelin/hrtime-loop"
 import { Settings, sheepQuery } from "../components"
 import { Vector2 } from "three"
 import { State } from "../../state"
+import { TickData } from "../world"
 
 export const sys_scoring = (
   settings: Settings,
   state: State,
-  world: World<Clock>
+  world: World<TickData>
 ) => {
   sheepQuery((e, [, position]) => {
     if (state.gamestate === "playing") {
       const pos = position as Vector2
-      const dt = world.latestTickData.dt / 1000
+      const dt = world.latestTickData.dt
       const limitHalfExtent =
         settings.worldHalfExtents[1] - settings.scoringAreaHeight
 

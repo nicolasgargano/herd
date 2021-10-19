@@ -2,8 +2,9 @@ import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { Vector2 } from "three"
 import { sheepMovementQuery } from "../components"
+import { TickData } from "../world"
 
-export const sys_test_wrap_sheep = (world: World<Clock>) => {
+export const sys_test_wrap_sheep = (world: World<TickData>) => {
   const size = 16
   sheepMovementQuery((e, [sheep, position, movement]) => {
     const pos = position as Vector2

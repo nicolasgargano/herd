@@ -2,11 +2,12 @@ import { Settings, playerControlledDogs } from "../components"
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { PlayerInput } from "../../input"
+import { TickData } from "../world"
 
 export const sys_player_input = (
   settings: Settings,
   inputMap: Map<string, PlayerInput>,
-  world: World<Clock>
+  world: World<TickData>
 ) => {
   playerControlledDogs((e, [dog, pos, movement, playerControl]) => {
     movement.velocity.x = 0

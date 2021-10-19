@@ -2,10 +2,11 @@ import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { Vector2 } from "three"
 import { Settings, Position, sheepMovementQuery } from "../components"
+import { TickData } from "../world"
 
 export const sys_sheep_separation = (
   boidSettings: Settings,
-  world: World<Clock>
+  world: World<TickData>
 ) => {
   sheepMovementQuery((sheepId, [sheep, pos, movement]) => {
     if (sheep.neighbors.length > 0) {

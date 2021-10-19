@@ -2,8 +2,12 @@ import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { Vector2 } from "three"
 import { Settings, Movement, sheepMovementQuery } from "../components"
+import { TickData } from "../world"
 
-export const sys_alignment = (boidSettings: Settings, world: World<Clock>) => {
+export const sys_alignment = (
+  boidSettings: Settings,
+  world: World<TickData>
+) => {
   sheepMovementQuery((e, [sheep, pos, movement]) => {
     if (sheep.neighbors.length > 0) {
       const accumulatedHerdVelocity = new Vector2(0, 0)

@@ -19,6 +19,12 @@ import { sys_movement_clamp } from "./systems/sys_movement_clamp"
 import { sys_scoring } from "./systems/sys_scoring"
 import { sys_win } from "./systems/sys_win"
 
+export type TickData = {
+  dt: number
+  tick: number
+  time: number
+}
+
 export const setupWorld = (
   state: State,
   inputMap: Map<string, PlayerInput>
@@ -57,7 +63,7 @@ export const setupWorld = (
     })
   }
 
-  const world = createWorld<Clock>({
+  const world = createWorld<TickData>({
     systems: [
       sys_reset_sheep_acceleration,
       world => sys_sheep_neighboring(settings, world),

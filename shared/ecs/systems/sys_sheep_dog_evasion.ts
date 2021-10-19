@@ -7,10 +7,11 @@ import {
 import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { Vector2 } from "three"
+import { TickData } from "../world"
 
 export const sys_sheep_dog_evasion = (
   boidSettings: Settings,
-  world: World<Clock>
+  world: World<TickData>
 ) => {
   sheepMovementQuery((sheepId, [sheep, sheepPos, sheepMovement]) => {
     const accumulatedDogDistancing = new Vector2(0, 0)

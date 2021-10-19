@@ -1,10 +1,10 @@
 import { World } from "@javelin/ecs"
-import { Clock } from "@javelin/hrtime-loop"
 import { Settings, sheepQuery } from "../components"
+import { TickData } from "../world"
 
 export const sys_sheep_neighboring = (
   boidSettings: Settings,
-  world: World<Clock>
+  world: World<TickData>
 ) => {
   sheepQuery((e, [sheep, pos]) => {
     const neighbors: number[] = []

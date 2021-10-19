@@ -16,10 +16,10 @@ import {
   Vec2
 } from "../shared/ecs/components"
 import { Vector2 } from "three"
-import { setupWorld } from "../shared/ecs/world"
+import { setupWorld, TickData } from "../shared/ecs/world"
 
 export class HerdRoom extends Room<State> {
-  private world: World<Clock> | undefined
+  private world: World<TickData> | undefined
 
   private inputMap: Map<string, PlayerInput> = new Map<string, PlayerInput>()
 
@@ -54,8 +54,18 @@ export class HerdRoom extends Room<State> {
 
     this.world = setupWorld(this.state, this.inputMap)
 
+    const tickData = {
+      dt: 0,
+      tick: 0,
+      time: 0
+    }
+
     createHrtimeLoop(clock => {
-      if (this.state.gamestate === "playing") this.world?.step(clock)
+      const dt = clock.dt / 1000
+      tickData.time = Number(clock.now)
+      tickData.dt = dt
+      tickData.tick = clock.tick
+      if (this.state.gamestate === "playing") this.world?.step(tickData)
     }, 1000 / 60).start()
   }
 

@@ -2,10 +2,11 @@ import { World } from "@javelin/ecs"
 import { Clock } from "@javelin/hrtime-loop"
 import { Vector2 } from "three"
 import { Settings, Position, sheepMovementQuery } from "../components"
+import { TickData } from "../world"
 
 export const sys_sheep_grouping = (
   boidSettings: Settings,
-  world: World<Clock>
+  world: World<TickData>
 ) => {
   sheepMovementQuery((e, [sheep, pos, movement]) => {
     if (sheep.neighbors.length > 0) {
