@@ -17,5 +17,8 @@ WORKDIR /usr/app
 COPY --from=ts-compiler /usr/app/package*.json ./
 COPY --from=ts-compiler /usr/app/build/server ./server
 COPY --from=ts-compiler /usr/app/build/shared ./shared
+
+# husky won't be available not is needed for prod
+RUN set-script prepare ""
 RUN npm ci --only=production
 CMD node ./server/main.js
