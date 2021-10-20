@@ -87,7 +87,11 @@ export const Sandbox = () => {
 
   return (
     <>
-      <Canvas>
+      <Canvas
+        onCreated={three => {
+          three.camera.position.set(0, 30, 20)
+        }}
+      >
         <Text>{tick}</Text>
         <Suspense fallback={null}>
           <Stage shadows environment={"forest"} adjustCamera={false}>
@@ -99,7 +103,11 @@ export const Sandbox = () => {
             ))}
             <Box
               position={[0, -1.5, 0]}
-              args={[34, 2, 55]}
+              args={[
+                settings.worldHalfExtents[0] * 2 + 1,
+                2,
+                settings.worldHalfExtents[1] * 2 + 1
+              ]}
               receiveShadow
               castShadow
             >
